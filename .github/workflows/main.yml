@@ -45,6 +45,8 @@ jobs:
       run: Compress-Archive -Path build\windows\x64\runner\Release\* -Destination release.zip
 
   Release:
+    permissions:
+      contents: write
     needs: [test-and-build-android, build-windows]
     runs-on: ubuntu-latest
     steps:
