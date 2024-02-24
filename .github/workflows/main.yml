@@ -21,14 +21,14 @@ jobs:
       #   run: flutter test
       - name: Build APK
         run: flutter build apk --split-per-abi
-      # - name: Make Artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: app-release
-      #     path: build/app/outputs/apk/release/
+      - name: Make Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-arm64-v8a
+          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
   build-windows:
     needs: test-and-build-android
-    name: Build windows binaries
+    name: Build Windows binaries
     runs-on: windows-latest
     permissions:
       contents: write
@@ -43,6 +43,11 @@ jobs:
       run: flutter build windows
     - name: Make zip
       run: Compress-Archive -Path build\windows\x64\runner\Release\* -Destination release.zip
+    - name: Make Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-release
+        path: release.zip
 
   Release:
     permissions:
@@ -50,11 +55,15 @@ jobs:
     needs: [test-and-build-android, build-windows]
     runs-on: ubuntu-latest
     steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@v2
+    - name: Display structure of downloaded files
+      run: ls -R
     - uses: softprops/action-gh-release@v1
       with:
         files: |
-          build/app/outputs/apk/release/app-arm64-v8a-release.apk
-          release.zip
+          app-arm64-v8a/app-arm64-v8a-release.apk
+          windows-release/release.zip
             
       
     
