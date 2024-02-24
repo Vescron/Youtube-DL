@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
 class Info extends StatelessWidget {
@@ -19,6 +21,7 @@ class Info extends StatelessWidget {
             Text('Add playlists feature'),
             Text('Add settings'),
             Text('Add download history'),
+            Text('Add download queue'),
           ],
         )
       ),
