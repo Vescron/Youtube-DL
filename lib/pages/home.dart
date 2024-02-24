@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:google_fonts/google_fonts.dart';
 //import 'package:path_provider/path_provider.dart';
 
 class Home extends StatefulWidget {
@@ -17,7 +18,7 @@ class Home extends StatefulWidget {
 TextEditingController myController = TextEditingController();
 
 class _HomeState extends State<Home> {
-
+  
   int progress = 0;
   bool isDisabled = false;
 
@@ -28,7 +29,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<void> downloader(context) async {
+  Future<void> downloader() async {
     var status = await Permission.manageExternalStorage.status;
       if (!status.isGranted) { 
         // If not we will ask for permission first 
@@ -39,17 +40,18 @@ class _HomeState extends State<Home> {
       var manifest = await YoutubeExplode().videos.streamsClient.getManifest(myController.text.trim());
     } catch (e) {
       await showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (context) {
           return AlertDialog(
-            contentTextStyle: TextStyle(color: Colors.white),
+            //contentTextStyle: TextStyle(color: Colors.white),
             elevation: 20,
-            backgroundColor: Colors.blueGrey[700],
+           // backgroundColor: Colors.blueGrey[700],
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.yellowAccent.shade100, width: 2),
+            //  side: BorderSide(color: Colors.yellowAccent.shade100, width: 2),
               borderRadius: BorderRadius.circular(20),
             ),
-            icon: Icon(Icons.error, color: Colors.red, size: 50,),
+            icon: Icon(Icons.error, size: 50,),
             content:
                 Text('Error: $e'),
           );
@@ -99,17 +101,18 @@ class _HomeState extends State<Home> {
     progress = 0;
     });
     await showDialog(
+      // ignore: use_build_context_synchronously
       context: context,
       builder: (context) {
         return AlertDialog(
-          contentTextStyle: TextStyle(color: Colors.white),
+          //contentTextStyle: TextStyle(color: Colors.white),
           elevation: 20,
-          backgroundColor: Colors.blueGrey[700],
+          //backgroundColor: Colors.blueGrey[700],
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.yellowAccent.shade100, width: 2),
+            //side: BorderSide(color: Colors.yellowAccent.shade100, width: 2),
             borderRadius: BorderRadius.circular(20),
           ),
-          icon: Icon(Icons.done_all, color: Colors.green, size: 50,),
+          icon: Icon(Icons.done_all, size: 50,),
           content:
               Text('Download completed and saved to: $filePath'),
         );
@@ -133,18 +136,19 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text('Youtube DL',
-              style: TextStyle(
-                shadows: [
-                  Shadow(
-                    blurRadius: 15.0,
-                    color: Colors.white,
-                    offset: Offset(0.0, 0.0),
-                  ),
-                ],
-                color: Colors.white,
-                fontSize: 30,
-                fontFamily: 'Quicksand',
-                fontWeight: FontWeight.bold,),
+              style: GoogleFonts.quicksand(
+                  textStyle: TextStyle(
+                  shadows: [
+                    Shadow(
+                      blurRadius: 15.0,
+                      color: Colors.white,
+                      offset: Offset(0.0, 0.0),
+                    ),
+                  ],
+                  color: Colors.white,
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,),
+              ),
               ),
               TextField(
                 style: TextStyle(color: Colors.white,
@@ -168,9 +172,9 @@ class _HomeState extends State<Home> {
                       color: Colors.blue[100],
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text('Progress $progress%...'),
+                    child: Text('Progress $progress%...',style: TextStyle(color: Colors.black,)),
                   ) : 
-                  ElevatedButton(onPressed: isDisabled ? null : () {downloader(context);},
+                  ElevatedButton(onPressed: isDisabled ? null : () {downloader();},
                    child: Text('Download')) 
               ),
 
@@ -178,7 +182,8 @@ class _HomeState extends State<Home> {
           ),
         )
         ),
-        backgroundColor: Color(0xFFe3dcc2),
+       // backgroundColor: Color(0xFFe3dcc2),
     );
   }
+  
 }
