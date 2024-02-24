@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
             height: 300,
             width: 300,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 172, 172),
+              color: Color.fromARGB(227, 255, 173, 173),
               borderRadius: BorderRadius.circular(20),
             ),
           padding: EdgeInsets.all(20),
