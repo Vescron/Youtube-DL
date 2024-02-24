@@ -6,6 +6,8 @@ jobs:
   test-and-build:
     name: Run flutter
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
