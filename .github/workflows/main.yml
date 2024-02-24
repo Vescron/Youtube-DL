@@ -3,8 +3,8 @@ on:
     tags:
       - 'v*.*.*'
 jobs:
-  test-and-build:
-    name: Run flutter
+  test-and-build-android:
+    name: Build Android APK
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -26,15 +26,31 @@ jobs:
       #   with:
       #     name: app-release
       #     path: build/app/outputs/apk/release/
-      - name: Build for Windows
-        run: flutter build windows
-      - name: Make windows zip
-        run: zip -r release.zip build/windows/x64/runner/Release
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            build/app/outputs/apk/release/app-arm64-v8a-release.apk
-            build/windows/x64/runner/Release/release.zip
+  build-windows:
+    name: Build windows binaries
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: "3.19.0"
+        channel: "stable"
+        cache: true
+    - name: Build for Windows
+      run: flutter build windows
+
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Make windows zip
+      run: zip -r release.zip build/windows/x64/runner/Release
+    - uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/app/outputs/apk/release/app-arm64-v8a-release.apk
+          build/windows/x64/runner/Release/release.zip
+            
       
     
