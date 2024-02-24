@@ -21,6 +21,13 @@ class _HomeState extends State<Home> {
   int progress = 0;
   bool isDisabled = false;
 
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future<void> downloader(context) async {
     var status = await Permission.manageExternalStorage.status;
       if (!status.isGranted) { 
@@ -77,10 +84,11 @@ class _HomeState extends State<Home> {
     await for (final data in videoStream) {
       // Keep track of the current downloaded data.
       count += data.length;
-      
+
       setState(() {
         progress = ((count/len)*100).ceil();
       });
+      
       fileStream.add(data);
     }
     
@@ -150,11 +158,10 @@ class _HomeState extends State<Home> {
                 ),
                 controller: myController,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(onPressed: isDisabled ? null : () {downloader(context);},
-                   child: Text('Download')),
+              Container(
+                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: 
+                  isDisabled ?
                   Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -162,8 +169,9 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text('Progress $progress%...'),
-                  ),
-                ],
+                  ) : 
+                  ElevatedButton(onPressed: isDisabled ? null : () {downloader(context);},
+                   child: Text('Download')) 
               ),
 
             ],

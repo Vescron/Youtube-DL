@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:youtube_dl/pages/home.dart';
 import 'package:youtube_dl/pages/main_page.dart';
 
 void main() {
