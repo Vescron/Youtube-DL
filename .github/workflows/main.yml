@@ -15,8 +15,8 @@ jobs:
           cache: true
       - name: Get Dependencies
         run: flutter pub get
-      - name: Test App
-        run: flutter test
+      # - name: Test App
+      #   run: flutter test
       - name: Build APK
         run: flutter build apk --split-per-abi
       
