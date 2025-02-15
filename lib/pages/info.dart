@@ -24,7 +24,8 @@ class Info extends StatelessWidget {
             Text('To-Do',
                 style: GoogleFonts.montserrat(fontSize: 40,
                 fontWeight: FontWeight.bold,
-                color: Colors.teal)
+                //color: Colors.teal
+                )
                 ),
             Expanded(
               child: ListView.builder(
